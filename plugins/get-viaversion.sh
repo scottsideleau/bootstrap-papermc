@@ -4,7 +4,7 @@ IFS='
 '
 
 CACHE_FILE=".download.cache"
-USER_AGENT="get-viaversion/1.0.0 (scott@sideleau.com)"
+USER_AGENT="get-viaversion/1.0.0 (https://github.com/scottsideleau/bootstrap-papermc)"
 VERBOSE=1
 FORCE=0
 CLEAN=0

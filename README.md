@@ -1,4 +1,4 @@
-# papermc-bootstrap
+# bootstrap-papermc
 
 A lightweight, POSIX-friendly bootstrapper for quickly deploying a mostly-vanilla Minecraft server using [PaperMC](https://papermc.io/) and [Velocity](https://velocitypowered.com/), complete with essential plugin support and universal client compatibility — including offline/non-Microsoft Java accounts and Bedrock Edition clients via Geyser.
 

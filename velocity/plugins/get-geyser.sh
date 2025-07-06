@@ -6,7 +6,7 @@ OUTPUT_FILE=""
 CLEAN=0
 FORCE=0
 CACHE_FILE=".download.cache"
-USER_AGENT="get-geyser/1.0.0 (scott@sideleau.com)"
+USER_AGENT="get-geyser/1.0.0 (https://github.com/scottsideleau/bootstrap-papermc)"
 VERBOSE=1
 
 # --- CLI Usage ---
