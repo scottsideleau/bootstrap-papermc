@@ -20,10 +20,10 @@ A lightweight, POSIX-friendly bootstrapper for quickly deploying a mostly-vanill
 ## Directory Structure
 
 ```
-papermc-bootstrap/
+bootstrap-papermc/
 ├── get-papermc.sh                  # Downloads the latest PaperMC build
 ├── clean.sh                        # Removes local cache files
-├── update.sh                       # Updates all components
+├── bootstrap.sh                    # Bootstrap/Updates all components
 ├── plugins/
 │   ├── get-viaversion.sh           # Downloads ViaVersion plugin
 │   └── update.sh                   # Updates all plugins in this directory
