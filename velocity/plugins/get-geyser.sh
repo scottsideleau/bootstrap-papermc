@@ -109,7 +109,7 @@ download_plugin() {
   else
     TMPDIR=$(mktemp -d)
     (
-      cd "$TMPDIR"
+      cd "$TMPDIR" || fail "Unable to enter temp directory"
       curl -fsSL -A "$USER_AGENT" -OJ "$BASE_URL" || fail "Download failed"
     )
     FILE_DOWNLOADED=$(find "$TMPDIR" -type f | head -n1)

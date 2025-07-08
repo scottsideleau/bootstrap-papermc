@@ -1,8 +1,8 @@
 #! /bin/sh
 
-rm -f *.jar
+rm -f -- *.jar
 
-./get-velocity.sh $@
+./get-velocity.sh "$@"
 
 for file in velocity-*.jar; do
     [ -e "$file" ] || continue

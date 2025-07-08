@@ -1,8 +1,8 @@
 #! /bin/bash
 
-rm -f *.jar
+rm -f -- *.jar
 
-./get-viaversion.sh $@
-./get-viaversion.sh -p ViaBackwards $@
-./get-viaversion.sh -p ViaRewind $@
+./get-viaversion.sh "$@"
+./get-viaversion.sh -p ViaBackwards "$@"
+./get-viaversion.sh -p ViaRewind "$@"
 

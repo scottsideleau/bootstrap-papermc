@@ -1,4 +1,4 @@
 #! /bin/bash
 
 ./bootstrap.sh -c
-find . -name *.jar -exec rm {} \+
+find . -name "*.jar" -exec rm {} \+
