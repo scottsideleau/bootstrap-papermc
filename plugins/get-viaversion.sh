@@ -10,8 +10,9 @@ FORCE=0
 CLEAN=0
 PROJECT="ViaVersion"
 
-usage() {
-  cat <<EOF
+usage()
+{
+  cat << EOF
 Usage: $0 [OPTIONS]
 
 Options:
@@ -30,41 +31,48 @@ Examples:
 EOF
 }
 
-log() {
+log()
+{
   [ "$VERBOSE" -eq 1 ] && printf "%s\n" "$*" >&2
 }
 
-fail() {
+fail()
+{
   printf "Error: %s\n" "$*" >&2
   exit 1
 }
 
-cleanup() {
+cleanup()
+{
   log "Cleaning up..."
   [ -f "$CACHE_FILE" ] && rm -f "$CACHE_FILE" && log "  Removed $CACHE_FILE"
 }
 
-is_cached() {
+is_cached()
+{
   [ -f "$CACHE_FILE" ] || return 1
   grep -qF "$1" "$CACHE_FILE"
 }
 
-cache_url() {
-  grep -qF "$1" "$CACHE_FILE" 2>/dev/null || echo "$1" >> "$CACHE_FILE"
+cache_url()
+{
+  grep -qF "$1" "$CACHE_FILE" 2> /dev/null || echo "$1" >> "$CACHE_FILE"
 }
 
-extract_jar_url() {
+extract_jar_url()
+{
   REPO="$1"
   API="https://api.github.com/repos/$REPO/releases/latest"
   log "Querying GitHub API for $REPO..."
 
-  curl -fsSL -H "User-Agent: $USER_AGENT" "$API" |
-    grep '"browser_download_url":' |
-    grep -Eo 'https://[^"]+\.jar' |
-    head -n1
+  curl -fsSL -H "User-Agent: $USER_AGENT" "$API" \
+    | grep '"browser_download_url":' \
+    | grep -Eo 'https://[^"]+\.jar' \
+    | head -n1
 }
 
-download_plugin() {
+download_plugin()
+{
   NAME="$1"
   REPO="$2"
 
@@ -96,19 +104,19 @@ download_plugin() {
 # Parse CLI arguments
 while [ $# -gt 0 ]; do
   case "$1" in
-    -p|--project)
+    -p | --project)
       PROJECT="$2"
       shift 2
       ;;
-    -f|--force)
+    -f | --force)
       FORCE=1
       shift
       ;;
-    -c|--clean)
+    -c | --clean)
       CLEAN=1
       shift
       ;;
-    -h|--help)
+    -h | --help)
       usage
       exit 0
       ;;
@@ -124,13 +132,14 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-main() {
+main()
+{
   if [ "$CLEAN" -eq 1 ]; then
     cleanup
     exit 0
   fi
 
-	touch "$CACHE_FILE" || fail "Unable to create $CACHE_FILE"
+  touch "$CACHE_FILE" || fail "Unable to create $CACHE_FILE"
 
   REPO="ViaVersion/${PROJECT}"
   download_plugin "$PROJECT" "$REPO"
@@ -139,4 +148,3 @@ main() {
 }
 
 main
-

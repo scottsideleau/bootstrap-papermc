@@ -1,5 +1,5 @@
 #! /bin/bash
-set -f  # Disable globbing
+set -f # Disable globbing
 
 PROJECT="paper"
 CACHE_FILE=".download.cache"
@@ -13,8 +13,9 @@ FORCE=0
 CLEAN=0
 
 # --- CLI Usage ---
-usage() {
-  cat <<EOF
+usage()
+{
+  cat << EOF
 Usage: $0 [OPTIONS]
 
 Options:
@@ -41,31 +42,31 @@ EOF
 # --- Parse Arguments ---
 while [ $# -gt 0 ]; do
   case "$1" in
-    -h|--help)
+    -h | --help)
       usage
       exit 0
       ;;
-    -l|--list)
+    -l | --list)
       LIST_MODE=1
       shift
       ;;
-    -v|--version)
+    -v | --version)
       PROJECT_VERSION="$2"
       shift 2
       ;;
-    -p|--project)
+    -p | --project)
       PROJECT="$2"
       shift 2
       ;;
-    -o|--output)
+    -o | --output)
       OUTPUT_FILE="$2"
       shift 2
       ;;
-    -f|--force)
+    -f | --force)
       FORCE=1
       shift
       ;;
-    -c|--clean)
+    -c | --clean)
       CLEAN=1
       shift
       ;;
@@ -81,23 +82,27 @@ PROJECT_VERSION="${PROJECT_VERSION:-${TRACKED_VERSION}}"
 API_URL="https://fill.papermc.io/v3/projects/${PROJECT}/versions/${PROJECT_VERSION}/builds"
 
 # --- Cleanup Function ---
-cleanup() {
+cleanup()
+{
   log "Cleaning up temporary files..."
   [ -f "$CACHE_FILE" ] && rm -f "$CACHE_FILE" && log "  Removed $CACHE_FILE"
 }
 
 # --- Utilities ---
 
-log() {
+log()
+{
   [ "$VERBOSE" -eq 1 ] && printf "%s\n" "$*"
 }
 
-fail() {
+fail()
+{
   printf "Error: %s\n" "$*" >&2
   exit 1
 }
 
-fetch_metadata() {
+fetch_metadata()
+{
   log "Fetching build metadata from $API_URL"
   DATA=$(curl -fsSL -H "User-Agent: $USER_AGENT" "$API_URL") || fail "Unable to contact API"
   [ -z "$DATA" ] && fail "Empty response from API"
@@ -105,14 +110,16 @@ fetch_metadata() {
   echo "$DATA"
 }
 
-check_api_ok() {
+check_api_ok()
+{
   echo "$1" | grep -q '"ok":false' && {
     MSG=$(echo "$1" | grep -o '"message":"[^"]*"' | sed 's/.*"message":"\([^"]*\)".*/\1/')
     fail "${MSG:-Unknown error from API}"
   }
 }
 
-extract_download_url() {
+extract_download_url()
+{
   echo "$1" | awk '
     BEGIN { found=0 }
     /"channel":"STABLE"/ { found=1 }
@@ -125,7 +132,8 @@ extract_download_url() {
   '
 }
 
-extract_download_name() {
+extract_download_name()
+{
   echo "$1" | awk '
     BEGIN { found=0 }
     /"channel":"STABLE"/ { found=1 }
@@ -138,7 +146,8 @@ extract_download_name() {
   '
 }
 
-download_server() {
+download_server()
+{
   URL="$1"
   OUTPUT="$2"
   [ -z "$URL" ] && fail "No valid download URL found"
@@ -148,16 +157,19 @@ download_server() {
   echo "Download completed: $OUTPUT"
 }
 
-is_cached() {
+is_cached()
+{
   [ -f "$CACHE_FILE" ] || return 1
   grep -qF "$1" "$CACHE_FILE"
 }
 
-cache_url() {
+cache_url()
+{
   printf "%s\n" "$1" > "$CACHE_FILE"
 }
 
-list_builds() {
+list_builds()
+{
   log "Available builds for $PROJECT_VERSION:"
   echo "$1" | awk '
     BEGIN {
@@ -180,7 +192,8 @@ list_builds() {
   '
 }
 
-main() {
+main()
+{
   if [ "$CLEAN" -eq 1 ]; then
     cleanup
     exit 0
@@ -216,4 +229,3 @@ main() {
 }
 
 main
-

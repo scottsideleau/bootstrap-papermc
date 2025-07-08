@@ -1,5 +1,5 @@
 #! /bin/bash
-set -f  # Disable globbing
+set -f # Disable globbing
 
 PROJECT="geyser"
 OUTPUT_FILE=""
@@ -10,8 +10,9 @@ USER_AGENT="get-geyser/1.0.0 (https://github.com/scottsideleau/bootstrap-papermc
 VERBOSE=1
 
 # --- CLI Usage ---
-usage() {
-  cat <<EOF
+usage()
+{
+  cat << EOF
 Usage: $0 [OPTIONS]
 
 Downloads the latest Velocity plugin for a GeyserMC project (default: geyser).
@@ -33,48 +34,54 @@ EOF
 }
 
 # --- Logging and Error ---
-log() {
+log()
+{
   [ "$VERBOSE" -eq 1 ] && printf "%s\n" "$*"
 }
 
-fail() {
+fail()
+{
   printf "Error: %s\n" "$*" >&2
   exit 1
 }
 
 # --- Cache Functions ---
-is_cached() {
+is_cached()
+{
   [ -f "$CACHE_FILE" ] && grep -qF "$1" "$CACHE_FILE"
 }
 
-cache_url() {
+cache_url()
+{
   printf "%s\n" "$1" >> "$CACHE_FILE"
 }
 
-cleanup() {
+cleanup()
+{
   log "Cleaning cache..."
   [ -f "$CACHE_FILE" ] && rm -f "$CACHE_FILE" && log "  Removed $CACHE_FILE"
 }
 
 # --- Argument Parser ---
-parse_args() {
+parse_args()
+{
   while [ $# -gt 0 ]; do
     case "$1" in
-      -p|--project)
+      -p | --project)
         shift
         PROJECT="${1:-}"
         ;;
-      -o|--output)
+      -o | --output)
         shift
         OUTPUT_FILE="${1:-}"
         ;;
-      -f|--force)
+      -f | --force)
         FORCE=1
         ;;
-      -c|--clean)
+      -c | --clean)
         CLEAN=1
         ;;
-      -h|--help)
+      -h | --help)
         usage
         exit 0
         ;;
@@ -87,7 +94,8 @@ parse_args() {
 }
 
 # --- Download Plugin ---
-download_plugin() {
+download_plugin()
+{
   BASE_URL="https://download.geysermc.org/v2/projects/${PROJECT}/versions/latest/builds/latest/downloads/velocity"
 
   log "Resolved URL: $BASE_URL"
@@ -118,7 +126,7 @@ download_plugin() {
     ENCODED_NAME=$(basename "$FILE_DOWNLOADED")
     DECODED_NAME=$(echo "$ENCODED_NAME" | sed -E 's/=\?UTF-8\?Q\?//; s/\?=$//')
     mv "$FILE_DOWNLOADED" "./$DECODED_NAME"
-    rmdir "$TMPDIR" 2>/dev/null || true
+    rmdir "$TMPDIR" 2> /dev/null || true
     log "Download completed: $DECODED_NAME"
   fi
 
@@ -126,7 +134,8 @@ download_plugin() {
 }
 
 # --- Main Entry ---
-main() {
+main()
+{
   parse_args "$@"
 
   if [ "$CLEAN" -eq 1 ]; then
@@ -138,4 +147,3 @@ main() {
 }
 
 main "$@"
-
