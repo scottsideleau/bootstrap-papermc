@@ -9,11 +9,11 @@ FLAGS='-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+Un
 
 # launch Velocity Proxy
 eval pushd /opt/papermc/velocity "$QUIET"
-eval "$JAVA" -Xms2G -Xmx2G "$FLAGS" -jar velocity.jar "$QUIET" &
+eval "$JAVA" -Xms512M -Xmx1G "$FLAGS" -jar velocity.jar "$QUIET" &
 eval popd "$QUIET"
 
 # launch PaperMC Server
 eval pushd /opt/papermc "$QUIET"
-eval "$JAVA" -Xms4G -Xmx4G "$FLAGS" -jar paper.jar nogui
+eval "$JAVA" -Xms512M -Xmx4G "$FLAGS" -jar paper.jar nogui
 eval popd "$QUIET"
 
