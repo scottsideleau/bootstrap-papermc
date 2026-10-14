@@ -1,3 +1,4 @@
 #! /bin/bash
 
-../get-papermc.sh --project velocity --version 3.5.0-SNAPSHOT "$@"
+../get-papermc.sh --project velocity --version 4.2.0 "$@"
+
