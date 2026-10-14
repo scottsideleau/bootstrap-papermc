@@ -21,17 +21,18 @@ A lightweight, POSIX-friendly bootstrapper for quickly deploying a mostly-vanill
 
 ```
 bootstrap-papermc/
-├── get-papermc.sh                  # Downloads the latest PaperMC build
+├── get-papermc.sh                  # Downloads the latest PaperMC build (via papermc.io)
 ├── clean.sh                        # Removes local cache files
 ├── bootstrap.sh                    # Bootstrap/Updates all components
 ├── plugins/
-│   ├── get-viaversion.sh           # Downloads ViaVersion plugin
+│   ├── get-modrinth.sh             # Downloads Modrinth plugins (via modrinth.com)
+│   ├── get-viaversion.sh           # Downloads ViaVersion plugins (via github.com)
 │   └── update.sh                   # Updates all plugins in this directory
 ├── velocity/
-│   ├── get-velocity.sh             # Downloads the latest Velocity build
+│   ├── get-velocity.sh             # Downloads the latest Velocity build (via papermc.io)
 │   ├── update.sh                   # Updates Velocity and its plugins
 │   └── plugins/
-│       ├── get-geyser.sh           # Downloads GeyserMC plugin
+│       ├── get-geyser.sh           # Downloads GeyserMC plugins (via geysermc.org)
 │       └── update.sh               # Updates all plugins in this directory
 ```
 
